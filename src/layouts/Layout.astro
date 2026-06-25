@@ -1,0 +1,43 @@
+---
+interface Props {
+  title?: string;
+}
+const { title = '박재서 — PARK JAESEO' } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+</head>
+<body>
+  <slot />
+</body>
+</html>
+
+<style is:global>
+  @import '../styles/global.css';
+</style>
+
+<script>
+  // Sticky section header border on scroll
+  const update = () => {
+    document.querySelectorAll<HTMLElement>('[data-sticky-header]').forEach((h) => {
+      const stuck = h.getBoundingClientRect().top <= 51;
+      h.style.borderBottomColor = stuck ? '#141414' : 'transparent';
+    });
+  };
+  let raf: number | null = null;
+  const onScroll = () => {
+    if (raf) return;
+    raf = requestAnimationFrame(() => { raf = null; update(); });
+  };
+  window.addEventListener('scroll', onScroll, true);
+  window.addEventListener('resize', onScroll);
+  update();
+</script>

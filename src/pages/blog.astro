@@ -1,0 +1,159 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const posts = [
+  { date: '2026.02', cat: 'development', title: 'React로 학교 시간표 관리 프로그램 만들기', excerpt: '선생님들의 시간표를 한곳에서 — Firebase와 Vercel로 배포한 사내 도구 개발기.' },
+  { date: '2025.11', cat: 'development', title: 'Firebase로 주간학습 공유 시스템 구축', excerpt: '학년 단위로 주간학습을 공유하는 작은 시스템을 만든 과정.' },
+  { date: '2025.09', cat: 'music',       title: 'innerverse 첫 무대를 마치고',            excerpt: '베이스로 다시 무대에 선 밤. 셋리스트와 그날의 기록.' },
+  { date: '2024.09', cat: 'education',   title: '메타버스로 영어 말하기 수업을 설계하며',   excerpt: '5~6학년군 영어 말하기, 가상 공간에서 아이들이 입을 떼기까지.' },
+  { date: '2024.05', cat: 'education',   title: '리코더가 들려주는 말 — 음악 수업 한 시간', excerpt: '소리의 어울림을 느끼며 노래를 배우고, 가사를 바꿔 부르는 시간.' },
+  { date: '2023.11', cat: 'education',   title: '미디어 리터러시, 매체 교육 이야기',       excerpt: '초등 5~6학년군 매체 교육을 분석하고 수업으로 구체화한 기록.' },
+  { date: '2023.07', cat: 'development', title: 'SNU Economic Review 유지보수 기록',       excerpt: '학회 홈페이지를 맡아 운영하며 마주한 문제들과 해결.' },
+  { date: '2023.06', cat: 'music',       title: '파노라마 시절의 셋리스트',                excerpt: '정기공연과 대동제 — 베이스와 기타를 오가던 무대들.' },
+  { date: '2023.03', cat: 'education',   title: '인디애나에서 보낸 한 학기',               excerpt: 'ISU 교육대학 연수, Dixie Bee 초등학교에서의 수업 실습.' },
+  { date: '2022.12', cat: 'design',      title: '공모전 대상까지, 영상 한 편의 과정',       excerpt: '기획부터 편집까지 — 고장 홍보 영상을 완성하기까지의 노트.' },
+  { date: '2021.08', cat: 'design',      title: '100주년 기념 로고 작업 노트',             excerpt: '전주교대 100주년 로고와 슬로건을 만들며 정리한 생각.' },
+  { date: '2016.04', cat: 'design',      title: '편집디자이너로 시작한 커리어',             excerpt: 'ICMKOREA에서의 첫 출발 — 보이는 것의 질서를 다듬는 일.' },
+];
+
+const catLabels: Record<string, string> = {
+  education: 'EDUCATION',
+  music: 'MUSIC',
+  development: 'DEVELOPMENT',
+  design: 'DESIGN',
+};
+---
+<Layout title="BLOG — 박재서">
+
+  <!-- NAV -->
+  <header style="position:sticky; top:0; z-index:50; display:flex; justify-content:space-between; align-items:center; padding:18px clamp(24px,6vw,96px); background:rgba(247,246,242,0.82); backdrop-filter:blur(10px); border-bottom:1px solid #E2E0D8;">
+    <a href="/" style="text-decoration:none; color:#141414; display:flex; align-items:baseline; gap:12px;">
+      <span style="font-size:16px; font-weight:600;">박재서</span>
+      <span style="font-family:'Space Grotesk',sans-serif; font-size:11px; letter-spacing:0.22em; color:#8A887E;">PARK JAESEO</span>
+    </a>
+    <nav style="display:flex; gap:18px; font-family:'Space Grotesk',sans-serif; font-size:11px; letter-spacing:0.14em; color:#5c5b54;">
+      <a href="/" style="text-decoration:none; color:inherit;">← PORTFOLIO</a>
+      <span style="color:#141414;">( BLOG )</span>
+    </nav>
+  </header>
+
+  <!-- HEADER -->
+  <section style="padding:48px clamp(24px,6vw,96px) 0; max-width:1392px; margin:0 auto; width:100%;">
+    <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:4px; padding-top:30px;">
+      <span style="font-family:'Space Grotesk',sans-serif; font-size:13px; letter-spacing:0.2em; color:#5c5b54;">( BLOG )</span>
+      <span id="count-label" style="font-family:'Space Grotesk',sans-serif; font-size:13px; letter-spacing:0.2em; color:#8A887E;">ALL · {posts.length}</span>
+    </div>
+    <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(56px,11vw,140px); line-height:0.9; letter-spacing:-0.02em; margin:0 0 24px;">BLOG</h1>
+    <p style="font-size:clamp(15px,1.5vw,18px); line-height:1.7; color:#3f3e38; max-width:600px; margin:0 0 40px;">가르치고 연주하고 만들며 남긴 기록들. 교육·음악·개발·디자인으로 분류해 둡니다.</p>
+  </section>
+
+  <!-- FILTER BAR -->
+  <div style="position:sticky; top:56px; z-index:30; background:rgba(247,246,242,0.92); backdrop-filter:blur(8px); border-bottom:1px solid #E2E0D8;">
+    <div style="max-width:1392px; margin:0 auto; padding:16px clamp(24px,6vw,96px); display:flex; flex-wrap:wrap; gap:10px;">
+      <button class="chip chip--active" data-filter="all">ALL</button>
+      <button class="chip" data-filter="education">EDUCATION</button>
+      <button class="chip" data-filter="music">MUSIC</button>
+      <button class="chip" data-filter="development">DEVELOPMENT</button>
+      <button class="chip" data-filter="design">DESIGN</button>
+    </div>
+  </div>
+
+  <!-- POSTS -->
+  <section style="max-width:1392px; margin:0 auto; padding:32px clamp(24px,6vw,96px) 120px; width:100%;">
+    {posts.map((post) => (
+      <a
+        class="post-row pl-link"
+        data-cat={post.cat}
+        href="https://parkjaeseo.com"
+        target="_blank"
+        rel="noopener"
+        style="display:block; padding:30px 0; border-top:1px solid #E2E0D8; color:#141414; text-decoration:none; transition:color .18s ease;"
+      >
+        <div style="display:flex; justify-content:space-between; align-items:baseline; gap:20px;">
+          <span style="font-family:'Space Grotesk',sans-serif; font-size:13px; letter-spacing:0.06em; color:#8A887E;">{post.date}</span>
+          <span style="font-family:'Space Grotesk',sans-serif; font-size:11px; letter-spacing:0.14em; color:#5c5b54; border:1px solid #cfcdc4; border-radius:100px; padding:4px 12px;">{catLabels[post.cat]}</span>
+        </div>
+        <div style="font-size:clamp(20px,2.5vw,26px); font-weight:600; letter-spacing:-0.01em; margin-top:10px; line-height:1.3;">{post.title}</div>
+        <div style="font-size:15px; line-height:1.6; color:#5c5b54; margin-top:8px; max-width:760px;">{post.excerpt}</div>
+      </a>
+    ))}
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="border-top:1px solid #141414; max-width:1392px; margin:0 auto; padding:48px clamp(24px,6vw,96px) 64px; width:100%; display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:16px;">
+    <a href="/" class="pl-link" style="font-family:'Space Grotesk',sans-serif; font-size:14px; letter-spacing:0.04em; color:#141414; border-bottom:1px solid #141414; padding-bottom:3px;">← BACK TO PORTFOLIO</a>
+    <span style="font-family:'Space Grotesk',sans-serif; font-size:12px; letter-spacing:0.16em; color:#8A887E;">© 2026 박재서 — PARK JAESEO</span>
+  </footer>
+
+</Layout>
+
+<style>
+  .chip {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    padding: 9px 18px;
+    border-radius: 100px;
+    cursor: pointer;
+    user-select: none;
+    border: 1px solid #cfcdc4;
+    background: transparent;
+    color: #5c5b54;
+    transition: all .15s ease;
+  }
+  .chip--active {
+    border-color: #141414;
+    background: #141414;
+    color: #F7F6F2;
+  }
+  .post-row:hover {
+    color: #8A887E !important;
+  }
+  .post-row.hidden {
+    display: none !important;
+  }
+</style>
+
+<script>
+  const chips = document.querySelectorAll<HTMLButtonElement>('.chip');
+  const rows  = document.querySelectorAll<HTMLAnchorElement>('.post-row');
+  const countLabel = document.getElementById('count-label')!;
+
+  const catLabels: Record<string, string> = {
+    all: 'ALL', education: 'EDUCATION', music: 'MUSIC',
+    development: 'DEVELOPMENT', design: 'DESIGN',
+  };
+
+  function applyFilter(filter: string) {
+    chips.forEach(c => {
+      c.classList.toggle('chip--active', c.dataset.filter === filter);
+    });
+
+    let count = 0;
+    rows.forEach(row => {
+      const show = filter === 'all' || row.dataset.cat === filter;
+      row.classList.toggle('hidden', !show);
+      if (show) count++;
+    });
+
+    countLabel.textContent = catLabels[filter] + ' · ' + count;
+
+    const url = new URL(location.href);
+    if (filter === 'all') {
+      url.searchParams.delete('cat');
+    } else {
+      url.searchParams.set('cat', filter);
+    }
+    history.replaceState(null, '', url.toString());
+  }
+
+  chips.forEach(chip => {
+    chip.addEventListener('click', () => applyFilter(chip.dataset.filter!));
+  });
+
+  // Read ?cat= URL param on load
+  const param = new URLSearchParams(location.search).get('cat');
+  if (param && ['education', 'music', 'development', 'design'].includes(param)) {
+    applyFilter(param);
+  }
+</script>

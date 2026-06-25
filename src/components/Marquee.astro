@@ -1,0 +1,21 @@
+---
+interface Props {
+  reverse?: boolean;
+  items?: string[];
+}
+const {
+  reverse = false,
+  items = ['EDUCATION', 'MUSIC', 'DEVELOPMENT', 'DESIGN'],
+} = Astro.props;
+const repeated = [...items, ...items];
+---
+<div class="mq-bar">
+  <div class={reverse ? 'mq-inner-rev' : 'mq-inner'}>
+    {repeated.map((item, i) => (
+      <>
+        <span>{item}</span>
+        {i < repeated.length - 1 && <span class="mq-sep">·</span>}
+      </>
+    ))}
+  </div>
+</div>
