@@ -181,6 +181,22 @@ a.proj-top:hover, a.proj:hover { color: #141414; }
 .proj-no   { font-family: 'Space Grotesk', sans-serif; font-size: 13px; color: #8A887E; }
 .proj-meta { font-size: 14px; color: #5c5b54; }
 
+/* ===== EDUCATION TIMELINE ROWS ===== */
+.edu-row {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  align-items: baseline;
+  gap: 28px;
+  padding: 18px 0;
+  border-top: 1px solid #E2E0D8;
+}
+@media (max-width: 600px) {
+  .edu-row {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+}
+
 /* ===== CHIPS ===== */
 .chip-line {
   font-family: 'Space Grotesk', sans-serif;
